@@ -1,0 +1,109 @@
+
+<section th:fragment="editContent">
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title">Edit User</h5>
+				<button type="button"
+						class="btn-close"
+						data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body">
+				<form class="text-center" id="formForEditing">
+
+					<div class="mb-3" style="display:none;">
+						<label for="edit-id"class="col-form-label d-flex justify-content-center" ><b>ID</b>:</label>
+						<input disabled type="text"
+							   class="form-control"
+							   id="edit-id"
+							   name="id">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-first_name"
+							   class="col-form-label d-flex justify-content-center"><b>First name</b>:</label>
+						<input type="text"
+							   class="form-control"
+							   id="edit-first_name"
+							   name="firstName">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-last_name"
+							   class="col-form-label d-flex justify-content-center"><b>Last name</b>:</label>
+						<input type="text"
+							   class="form-control"
+							   id="edit-last_name"
+							   name="lastName">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-age"
+							   class="col-form-label d-flex justify-content-center"><b>Age</b>:</label>
+						<input type="number"
+							   class="form-control"
+							   id="edit-age"
+							   name="age">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-email"
+							   class="col-form-label d-flex justify-content-center"><b>Email</b>:</label>
+						<input readonly type="email"
+							   class="form-control"
+							   id="edit-email"
+							   name="email">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-password"
+							   class="col-form-label d-flex justify-content-center"><b>Password</b>:</label>
+						<input type="password"
+							   class="form-control"
+							   id="edit-password"
+							   name="password">
+					</div>
+
+					<div class="mb-3">
+						<label for="edit-role" class="col-form-label d-flex justify-content-center"><b>Role</b>:</label>
+
+<!--						<select class="form-control custom-select" id="edit-role" name="roles"-->
+<!--								size="2" style="min-width: 300px;" required multiple>-->
+<!--							<option th:each="role : ${roles}"-->
+<!--									th:text="${role.getAuthority()}"-->
+<!--									th:value="${role.id}"-->
+<!--									th:attr="selected=${user.getRoles().contains(role)}">-->
+<!--							</option>-->
+						<select name="roles" id="edit-role" class="form-control custom-select" size="2" required multiple>
+
+<!--							<option th:each="role : ${user.roles}"-->
+
+<!--									th:text="${role.getName()}"-->
+<!--									th:value="${role.id}"-->
+<!--									th:attr="selected=${user.getRoles().contains(role)}">-->
+<!--							</option>-->
+
+							<option value="2">ADMIN</option>
+							<option value="1">USER</option>
+
+						</select>
+
+					</div>
+				</form>
+			</div>
+
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="editClose">Close</button>
+				<button type="button" class="btn btn-primary" id="editBtn"
+						onclick="editUser(); getAdminPage()">Edit</button>
+			</div>
+
+
+		</div>
+	</div>
+
+</section>

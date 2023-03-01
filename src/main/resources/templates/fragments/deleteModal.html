@@ -1,0 +1,75 @@
+<section th:fragment="deleteContent">
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title">Delete</h5>
+				<button type="button"
+						class="btn-close"
+						data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body">
+				<form class="text-center" id="formForDeleting">
+
+					<div class="mb-3">
+						<label for="id_del"
+							   class="col-form-label d-flex justify-content-center" ><b>ID</b>:</label>
+						<input disabled type="text"
+							   class="form-control"
+							   id="id_del"
+							   name="id">
+					</div>
+					<div class="mb-3">
+						<label for="name_del"
+							   class="col-form-label d-flex justify-content-center"><b>First name</b>:</label>
+						<input readonly  type="text"
+							   class="form-control"
+							   id="name_del"
+							   name="firstName">
+					</div>
+					<div class="mb-3">
+						<label for="lastname_del"
+							   class="col-form-label d-flex justify-content-center"><b>Last name</b>:</label>
+						<input readonly  type="text"
+							   class="form-control"
+							   id="lastname_del"
+							   name="lastName">
+					</div>
+					<div class="mb-3">
+						<label for="age_del"
+							   class="col-form-label d-flex justify-content-center"><b>Age</b>:</label>
+						<input readonly  type="number"
+							   class="form-control"
+							   id="age_del"
+							   name="age">
+					</div>
+					<div class="mb-3">
+						<label for="email_del"
+							   class="col-form-label d-flex justify-content-center"><b>Email</b>:</label>
+						<input readonly type="email"
+							   class="form-control"
+							   id="email_del"
+							   name="email">
+					</div>
+					<div class="mb-3">
+						<label for="delete-role"
+							   class="col-form-label d-flex justify-content-center"><b>Role</b>:</label>
+						<input readonly type="text"
+							   class="form-control"
+							   id="delete-role"
+							   name="role">
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeDelete">Close</button>
+				<button type="button" class="btn btn-primary" id="deleteBtn"
+						onclick="deleteUser(); getAdminPage()">Delete</button>
+			</div>
+		</div>
+	</div>
+
+</section>
