@@ -1,12 +1,12 @@
+const idField_delete = document.getElementById('id_del');
+const nameField_delete = document.getElementById('name_del');
+const lastNameField_delete = document.getElementById('lastname_del');
+const ageField_delete = document.getElementById('age_del');
+const emailField_delete = document.getElementById('email_del');
+const roleField_delete = document.getElementById("delete-role");
+
 
 async function deleteModalData(id) {
-    const idField_delete = document.getElementById('id_del');
-    const nameField_delete = document.getElementById('name_del');
-    const lastNameField_delete = document.getElementById('lastname_del');
-    const ageField_delete = document.getElementById('age_del');
-    const emailField_delete = document.getElementById('email_del');
-    const roleField_delete = document.getElementById("delete-role");
-
     let user = await fetch('/admin/users/' + id).then(response => response.json());
 
     idField_delete.value = `${user.id}`;
@@ -22,8 +22,8 @@ async function deleteModalData(id) {
     const deleteModalWindow = document.getElementById("deleteModal");
     const newDeleteModalWindow = new bootstrap.Modal(deleteModalWindow);
     newDeleteModalWindow.show();
-
 }
+
 
 async function deleteUser() {
     let deleteUser = {
@@ -38,6 +38,6 @@ async function deleteUser() {
 
     fetch(urlDel, deleteUser).then(() => {
         btn_closeDeleteModalWindow.click();
-        getAdminPage();
+        loadAdminPage();
     })
 }

@@ -12,7 +12,7 @@
 	<title>Admin panel</title>
 </head>
 
-<body class="h-100">
+<body class="h-100" id="return show('Page1','Page2');">
 <!--header-->
 <section th:replace="fragments/header :: headerContent"></section>
 
@@ -73,14 +73,12 @@
 
 
 		<!--modal edit-->
-		<div class="modal fade"
-			 id="editModal" tabindex="-1">
+		<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="true">
 			<section th:replace="fragments/editModal :: editContent"></section>
 		</div>
 
 		<!--modal delete-->
-		<div class="modal fade"
-			 id="deleteModal" tabindex="-1">
+		<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="true">
 			<section th:replace="fragments/deleteModal :: deleteContent"></section>
 		</div>
 </div>

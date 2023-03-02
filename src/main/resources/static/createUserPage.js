@@ -1,17 +1,15 @@
-const form_new = document.getElementById('formForNewUser');
-const role_new = document.querySelector('#roles').selectedOptions;
+const form_newUser = document.getElementById('formForNewUser');
+const selectedRoles = document.querySelector('#roles').selectedOptions;
 
-form_new.addEventListener('submit', addNewUser);
+form_newUser.addEventListener('submit', addNewUser);
 
 async function addNewUser(event) {
     event.preventDefault();
 
-    const urlNew = '/admin/users';
     let listOfRole = [];
-
-    for (let i = 0; i < role_new.length; i++) {
+    for (let i = 0; i < selectedRoles.length; i++) {
         listOfRole.push({
-            id:role_new[i].value
+            id:selectedRoles[i].value
         });
     }
 
@@ -21,42 +19,21 @@ async function addNewUser(event) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            firstName: form_new.firstname.value,
-            lastName: form_new.lastname.value,
-            age: form_new.age.value,
-            email: form_new.email.value,
-            password: form_new.password.value,
+            firstName: form_newUser.firstname.value,
+            lastName: form_newUser.lastname.value,
+            age: form_newUser.age.value,
+            email: form_newUser.email.value,
+            password: form_newUser.password.value,
             roles: listOfRole
         })
     };
 
-    await fetch(urlNew, createUser).then(() => {
-        form_new.reset();
-        getAdminPage();
 
-        var triggerTabList = [].slice.call(document.querySelectorAll('#Admin_panel-tab a'));
-        triggerTabList.forEach(function (triggerEl) {
-            var tabTrigger = new bootstrap.Tab(triggerEl);
+    await fetch('/admin/users', createUser).then(() => {
+        form_newUser.reset();
+        loadAdminPage();
 
-            triggerEl.addEventListener('click', function (event) {
-                event.preventDefault();
-                tabTrigger.show();
-            })
-        })
-
-        var triggerEl = document.querySelector('#Admin_panel-tab a[href="#user_table"]');
-        bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
-
-
-        // await fetch(urlNew, createUser).then(() => {
-        //     btn_closeEditModalWindow.click();
-        //     getAdminPage();
-        // });
-
+        const tabButton = document.querySelector('#user_table-tab');
+        tabButton.click();
     });
-
 }
-
-
-
-

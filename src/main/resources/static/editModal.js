@@ -1,12 +1,12 @@
+const idField_edit = document.getElementById('edit-id');
+const nameField_edit = document.getElementById('edit-first_name');
+const lastnNmeField_edit = document.getElementById('edit-last_name');
+const ageField_edit = document.getElementById('edit-age');
+const emailField_edit = document.getElementById('edit-email');
+const roleField_edit = document.getElementById('edit-role');
+
 
 async function loadDataForEditModal(id) {
-    const idField_edit = document.getElementById('edit-id');
-    const nameField_edit = document.getElementById('edit-first_name');
-    const lastnNmeField_edit = document.getElementById('edit-last_name');
-    const ageField_edit = document.getElementById('edit-age');
-    const emailField_edit = document.getElementById('edit-email');
-    const roleField_edit = document.getElementById('edit-role');
-
     let user = await fetch('/admin/users/' + id).then(response => response.json());
 
     idField_edit.value = `${user.id}`;
@@ -52,6 +52,6 @@ async function editUser() {
 
     await fetch(urlEdit, editUser).then(() => {
         btn_closeEditModalWindow.click();
-        getAdminPage();
+        loadAdminPage();
     });
 }
