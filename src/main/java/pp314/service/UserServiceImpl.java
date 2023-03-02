@@ -46,10 +46,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-    @Override
+
+	@Override
     @Transactional
     public void add(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -62,6 +63,11 @@ public class UserServiceImpl implements UserService{
     public User getById(Long id) {
         return userRepository.findById(id);
     }
+	@Override
+	public User findById(Long id) {
+		return userRepository.findById(id);
+	}
+
 
     @Override
     public User getByUsername(String email) {
@@ -77,13 +83,29 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void update(User user, Long id) {
-        User oldUser = getById(user.getId());
-        if (oldUser.getPassword().equals(user.getPassword()) || "".equals(user.getPassword())) {
-            user.setPassword(oldUser.getPassword());
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-        userRepository.save(user);
+        final User previousUser = userRepository.findById(id);
+
+	    previousUser.setFirstName(user.getFirstName());
+	    previousUser.setLastName(user.getLastName());
+	    previousUser.setAge(user.getAge());
+		previousUser.setRoles(user.getRoles());
+
+	    String previousEmail = previousUser.getEmail();
+	    String newEmail = user.getEmail();
+	    if (previousEmail.equals(newEmail) || existsByEmail(newEmail)) {
+		    previousUser.setEmail(previousEmail);
+	    } else {
+		    previousUser.setEmail(newEmail);
+	    }
+
+		String newPassword = user.getPassword();
+	    if (newPassword.isEmpty()) {
+		    previousUser.setPassword(previousUser.getPassword());
+	    } else {
+		    previousUser.setPassword(passwordEncoder.encode(newPassword));
+	    }
+
+        userRepository.save(previousUser);
     }
 
 
@@ -95,14 +117,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-//    @Override
-//    public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
-//        Optional<User> userPrimary = getByUsername(firstName);
-//        if (userPrimary == null) {
-//            throw new UsernameNotFoundException(firstName + " not found");
-//        }
-//        return userPrimary.get();
-//    }
+
+	@Transactional
+	@Override
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+
+	}
 
 	@Transactional
 	@Override

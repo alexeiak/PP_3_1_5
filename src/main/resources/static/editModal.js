@@ -3,6 +3,7 @@ const nameField_edit = document.getElementById('edit-first_name');
 const lastnNmeField_edit = document.getElementById('edit-last_name');
 const ageField_edit = document.getElementById('edit-age');
 const emailField_edit = document.getElementById('edit-email');
+const passwordField_edit = document.getElementById('edit-password');
 const roleField_edit = document.getElementById('edit-role');
 
 
@@ -14,6 +15,7 @@ async function loadDataForEditModal(id) {
     lastnNmeField_edit.value = `${user.lastName}`;
     ageField_edit.value = `${user.age}`;
     emailField_edit.value = `${user.email}`;
+    passwordField_edit.value = ``;
 
     Array.from(roleField_edit.options).forEach(option => {
         option.selected = user.roles.some(role => role.id.toString() === option.value);

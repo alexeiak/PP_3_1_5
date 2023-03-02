@@ -52,7 +52,6 @@ public class AdminRESTController {
     @PostMapping("/users")
     public ResponseEntity<HttpStatus> saveNewUser(
             @RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.add(user);
         return new ResponseEntity<> (HttpStatus.OK);
     }
@@ -66,11 +65,7 @@ public class AdminRESTController {
 
     @PatchMapping("/users/{id}")
     public ResponseEntity<HttpStatus> userSaveEdit(@RequestBody @NotNull User user, @PathVariable Long id) {
-        user.setId(id);
-        System.out.println(user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.update(user, id);
-
         return new ResponseEntity<> (HttpStatus.OK);
     }
 }

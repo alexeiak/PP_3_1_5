@@ -29,12 +29,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+
     @Column(name = "password")
     private String password;
 
     @Email
-    @NotNull
     @Column(name = "email", unique = true, length = 50, nullable = false)
     private String email;
 

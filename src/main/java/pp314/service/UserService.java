@@ -15,7 +15,10 @@ public interface UserService extends UserDetailsService {
     void update(User user, Long id);
 
     User getById(Long id);
+    User findById(Long id);
     User getByUsername(String userName);
 
     User getCurrentUser();
+
+	boolean existsByEmail(String email);
 }

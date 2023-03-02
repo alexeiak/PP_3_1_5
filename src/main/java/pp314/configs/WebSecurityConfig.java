@@ -18,14 +18,15 @@ import org.springframework.web.context.annotation.SessionScope;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private SuccessUserHandler successUserHandler;
-	private UserService userService;
+//	private UserService userService;
+	private UserDetailsService userDetailsService;
 
 
 	@Autowired
 	public WebSecurityConfig(SuccessUserHandler successUserHandler,
-	                         UserService userService) {
+	                         UserDetailsService userDetailsService) {
 		this.successUserHandler = successUserHandler;
-		this.userService = userService;
+		this.userDetailsService = userDetailsService;
 	}
 
 
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
-		authenticationProvider.setUserDetailsService((UserDetailsService) userService);
+		authenticationProvider.setUserDetailsService(userDetailsService);
 
 		return authenticationProvider;
 	}
