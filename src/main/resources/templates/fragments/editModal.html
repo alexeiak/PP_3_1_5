@@ -1,20 +1,22 @@
 
 <section th:fragment="editContent">
 
+
 	<div class="modal-dialog">
 		<div class="modal-content">
 
 			<div class="modal-header">
 				<h5 class="modal-title">Edit User</h5>
-				<button type="button"
-						class="btn-close"
-						data-bs-dismiss="modal" aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
 			<div class="modal-body">
-				<form class="text-center" id="formForEditing">
+				<div class="bg-white font-weight-bold">
+				<div class="d-flex justify-content-center align-items-center text-center">
 
-					<div class="mb-3" style="display:none;">
+				<form class="modal-body col" id="formForEditing" style="max-width: 300px;">
+
+					<div class="mb-3">
 						<label for="edit-id"class="col-form-label d-flex justify-content-center" ><b>ID</b>:</label>
 						<input disabled type="text"
 							   class="form-control"
@@ -88,11 +90,13 @@
 
 							<option value="2">ADMIN</option>
 							<option value="1">USER</option>
-
 						</select>
 
 					</div>
 				</form>
+
+				</div>
+				</div>
 			</div>
 
 

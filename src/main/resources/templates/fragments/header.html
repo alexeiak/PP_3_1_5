@@ -1,16 +1,13 @@
 <section th:fragment="headerContent">
 
-	<nav class="navbar navbar-dark bg-dark">
-		<div class="container-fluid">
-			<div>
-				<a class="navbar-brand">
-					<strong id="navbar-email" th:font="bold"></strong>
-					with roles:<span id="navbar-roles"></span>
-				</a>
-			</div>
-
-			<a th:href="@{/logout}" class="float-right btn text-secondary">Logout</a>
-		</div>
-	</nav>
+<nav class="navbar fixed-top  p-0  bg-dark">
+<div class="container-fluid">
+	<div class="text-white ">
+		<strong id="navbar-email" th:font="bold"></strong>
+		with roles:<span id="navbar-roles"></span>
+	</div>
+	<a th:href="@{/logout}" class="float-right btn text-light">Logout</a>
+</div>
+</nav>
 
 </section>

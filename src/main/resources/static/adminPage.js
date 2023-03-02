@@ -1,52 +1,36 @@
-// const adminurl = '/admin/users';
 
 // import { getPrettyRoles } from './utils.js';
 // import { getUserPage } from './userPage.js';
 
+
+// Header
+const currentUser = fetch('/admin/current').then(response => response.json());
+
+currentUser.then(user => {
+    document.getElementById("navbar-email").innerHTML = user.email;
+    document.getElementById("navbar-roles").innerHTML = getPrettyRoles(user).toString();
+})
+
+
+// Users tab
 async function getAdminPage() {
-
-    let currentUser = fetch('/admin/current')
-        .then(response => response.json());
-
+    let currentUser = fetch('/admin/current').then(response => response.json());
     let page = await fetch('/admin/users');
 
     if(page.ok) {
         let listAllUser = await page.json();
         loadTableData(listAllUser);
     } else {
-        alert(`Error, ${page.status}`)
+        alert(`Error, ${page.status}`);
     }
 }
 
 
-async function getUserPage() {
-    // let page = await fetch('/admin/current');
-
-    let user = fetch('/admin/current')
-        .then(response => response.json());
-
-
-    // let user = await page.json();
-
-    console.log('\n!!!! userPage: ' + user)
-    console.log(user)
-    console.log('!!!!\n')
-
-    getInformationAboutUser(user);
-
-}
-
 function loadTableData(listAllUser) {
-    const tableBody = document.getElementById('admintbody');
     let dataHtml = '';
 
     for (let user of listAllUser) {
         let roles = getPrettyRoles(user);
-        // let roles = [];
-        // for (let role of user.roles) {
-        //     roles.push(" " + role.name.toString()
-        //         .replaceAll("ROLE_", ""))
-        // }
 
         dataHtml += `
                     <tr>
@@ -71,55 +55,47 @@ function loadTableData(listAllUser) {
                     </tr>
         `}
 
+    const tableBody = document.getElementById('admintbody');
     tableBody.innerHTML = dataHtml;
 }
 
 
-
+// Current user tab
+async function getUserPage() {
+    let user = fetch('/admin/current').then(response => response.json());
+    getInformationAboutUser(user);
+}
 
 function getInformationAboutUser(user) {
-    const tableBody = document.getElementById('usertbody');
+    let roles = getPrettyRoles(user);
 
-    console.log('\n\ntableBody');
-    console.log(tableBody);
-    // console.log('userSata', JSON.stringify(user))
-
-    // let dataHtml = '';
-
-
-    let roles = [];
-    for (let role of user.roles) {roles
-        roles.push(" " + role.name.toString()
-            .replaceAll("ROLE_", ""))
-    }
-
-    let dataHtml =
-        `<tr>
+    let dataHtml = `
+             <tr>
                 <td>${user.id}</td>
                 <td>${user.firstName}</td>
                 <td>${user.lastName}</td>
                 <td>${user.age}</td>
                 <td>${user.email}</td>
                 <td>${roles}</td>   
-            </tr>`;
+            </tr>
+    `;
 
+    const tableBody = document.getElementById('usertbody');
     tableBody.innerHTML = dataHtml;
 }
 
 
 
-
-
 function getPrettyRoles(user) {
     let roles = [];
-
     for (let role of user.roles) {
         roles.push(" " + role.name.toString()
-            .replaceAll("ROLE_", ""))
+            .replaceAll("ROLE_", ""));
     }
 
-    return roles
+    return roles;
 }
+
 
 getAdminPage();
 getUserPage();

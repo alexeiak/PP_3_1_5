@@ -1,6 +1,5 @@
 package pp314.configs;
 
-
 import pp314.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,24 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		this.userService = userService;
 	}
 
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
-//                .antMatchers("/api/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .successHandler(successUserHandler)
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
