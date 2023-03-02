@@ -1,6 +1,4 @@
-
 <section th:fragment="editContent">
-
 
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -71,25 +69,9 @@
 
 					<div class="mb-3">
 						<label for="edit-role" class="col-form-label d-flex justify-content-center"><b>Role</b>:</label>
-
-<!--						<select class="form-control custom-select" id="edit-role" name="roles"-->
-<!--								size="2" style="min-width: 300px;" required multiple>-->
-<!--							<option th:each="role : ${roles}"-->
-<!--									th:text="${role.getAuthority()}"-->
-<!--									th:value="${role.id}"-->
-<!--									th:attr="selected=${user.getRoles().contains(role)}">-->
-<!--							</option>-->
 						<select name="roles" id="edit-role" class="form-control custom-select" size="2" required multiple>
-
-<!--							<option th:each="role : ${user.roles}"-->
-
-<!--									th:text="${role.getName()}"-->
-<!--									th:value="${role.id}"-->
-<!--									th:attr="selected=${user.getRoles().contains(role)}">-->
-<!--							</option>-->
-
-							<option value="2">ADMIN</option>
-							<option value="1">USER</option>
+							<option value="1">ADMIN</option>
+							<option value="2">USER</option>
 						</select>
 
 					</div>
@@ -105,7 +87,6 @@
 				<button type="button" class="btn btn-primary" id="editBtn"
 						onclick="editUser(); getAdminPage()">Edit</button>
 			</div>
-
 
 		</div>
 	</div>

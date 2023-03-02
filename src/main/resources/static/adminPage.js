@@ -1,32 +1,19 @@
+// import { getPrettyRoles } from 'utils.js';
 
-// import { getPrettyRoles } from './utils.js';
-// import { getUserPage } from './userPage.js';
-
-
-// Header
-const currentUser = fetch('/admin/current').then(response => response.json());
-
-currentUser.then(user => {
+async function loadHeader() {
+    const user = await fetch('/user/current').then(response => response.json());
     document.getElementById("navbar-email").innerHTML = user.email;
     document.getElementById("navbar-roles").innerHTML = getPrettyRoles(user).toString();
-})
-
-
-// Users tab
-async function getAdminPage() {
-    let currentUser = fetch('/admin/current').then(response => response.json());
-    let page = await fetch('/admin/users');
-
-    if(page.ok) {
-        let listAllUser = await page.json();
-        loadTableData(listAllUser);
-    } else {
-        alert(`Error, ${page.status}`);
-    }
 }
 
+/* Users tab */
+async function loadAdminPage() {
+    let page = await fetch('/admin/users');
+    let listAllUser = await page.json();
+    setTableData(listAllUser);
+}
 
-function loadTableData(listAllUser) {
+function setTableData(listAllUser) {
     let dataHtml = '';
 
     for (let user of listAllUser) {
@@ -60,8 +47,8 @@ function loadTableData(listAllUser) {
 }
 
 
-// Current user tab
-async function getUserPage() {
+/* Current user tab */
+async function loadUserPage() {
     let user = fetch('/admin/current').then(response => response.json());
     getInformationAboutUser(user);
 }
@@ -84,6 +71,10 @@ function getInformationAboutUser(user) {
     tableBody.innerHTML = dataHtml;
 }
 
+loadHeader();
+loadAdminPage();
+loadUserPage();
+
 
 
 function getPrettyRoles(user) {
@@ -92,11 +83,6 @@ function getPrettyRoles(user) {
         roles.push(" " + role.name.toString()
             .replaceAll("ROLE_", ""));
     }
-
     return roles;
 }
-
-
-getAdminPage();
-getUserPage();
 

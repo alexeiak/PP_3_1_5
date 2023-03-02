@@ -15,7 +15,7 @@ async function addNewUser(event) {
         });
     }
 
-    let method = {
+    let createUser = {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
@@ -30,7 +30,7 @@ async function addNewUser(event) {
         })
     };
 
-    await fetch(urlNew,method).then(() => {
+    await fetch(urlNew, createUser).then(() => {
         form_new.reset();
         getAdminPage();
 
@@ -46,6 +46,13 @@ async function addNewUser(event) {
 
         var triggerEl = document.querySelector('#Admin_panel-tab a[href="#user_table"]');
         bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
+
+
+        // await fetch(urlNew, createUser).then(() => {
+        //     btn_closeEditModalWindow.click();
+        //     getAdminPage();
+        // });
+
     });
 
 }

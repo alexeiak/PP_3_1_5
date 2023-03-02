@@ -1,71 +1,57 @@
-const form_ed = document.getElementById('formForEditing');
-
-const id_ed = document.getElementById('edit-id');
-const name_ed = document.getElementById('edit-first_name');
-const lastname_ed = document.getElementById('edit-last_name');
-const age_ed = document.getElementById('edit-age');
-const email_ed = document.getElementById('edit-email');
-// const role_ed = document.getElementById('edit-role');
-
-const editModal = document.getElementById("editModal");
-const closeEditButton = document.getElementById("editClose");
-const bsEditModal = new bootstrap.Modal(editModal);
-
 
 async function loadDataForEditModal(id) {
-    const  urlDataEd = '/admin/users/' + id;
-    let usersPageEd = await fetch(urlDataEd);
+    const idField_edit = document.getElementById('edit-id');
+    const nameField_edit = document.getElementById('edit-first_name');
+    const lastnNmeField_edit = document.getElementById('edit-last_name');
+    const ageField_edit = document.getElementById('edit-age');
+    const emailField_edit = document.getElementById('edit-email');
+    const roleField_edit = document.getElementById('edit-role');
 
-    if (usersPageEd.ok) {
-        // let userData =
-        await usersPageEd.json().then(user => {
-            // console.log('userData', JSON.stringify(user))
-            id_ed.value = `${user.id}`;
-            name_ed.value = `${user.firstName}`;
-            lastname_ed.value = `${user.lastName}`;
-            age_ed.value = `${user.age}`;
-            email_ed.value = `${user.email}`;
-            // role_ed.value = `${user.roles}`;
-        });
-        // console.log("id_ed: " + id_ed.value + " !!");
-        bsEditModal.show();
-    } else {
-        alert(`Error, ${usersPageEd.status}`);
-    }
+    let user = await fetch('/admin/users/' + id).then(response => response.json());
+
+    idField_edit.value = `${user.id}`;
+    nameField_edit.value = `${user.firstName}`;
+    lastnNmeField_edit.value = `${user.lastName}`;
+    ageField_edit.value = `${user.age}`;
+    emailField_edit.value = `${user.email}`;
+
+    Array.from(roleField_edit.options).forEach(option => {
+        option.selected = user.roles.some(role => role.id.toString() === option.value);
+    });
+
+    const editModalWindow = document.getElementById("editModal");
+    const newEditModalWindow = new bootstrap.Modal(editModalWindow);
+    newEditModalWindow.show();
 }
+
+
 async function editUser() {
-    let urlEdit = '/admin/users/' + id_ed.value;
-    let listOfRole = [];
+    const form_edit = document.getElementById('formForEditing');
 
-    console.dir(form_ed);
+    let roles = Array.from(form_edit.roles.options)
+        .filter(role => role.selected)
+        .map(role => ({id: role.value}));
 
-    for (let i=0; i<form_ed.roles.options.length; i++) {
-        if (form_ed.roles.options[i].selected) {
-            let tmp = {};
-            tmp["id"] = form_ed.roles.options[i].value;
-            listOfRole.push(tmp);
-        }
-    }
-
-    let method = {
+    let editUser = {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            firstName: form_ed.firstName.value,
-            lastName: form_ed.lastName.value,
-            age: form_ed.age.value,
-            email: form_ed.email.value,
-            password: form_ed.password.value,
-            roles: listOfRole
+            firstName: form_edit.firstName.value,
+            lastName: form_edit.lastName.value,
+            age: form_edit.age.value,
+            email: form_edit.email.value,
+            password: form_edit.password.value,
+            roles: roles
         })
-    }
+    };
 
-    // console.log(urlEdit,method)
+    const btn_closeEditModalWindow = document.getElementById("editClose");
+    let urlEdit = '/admin/users/' + idField_edit.value;
 
-    await fetch(urlEdit,method).then(() => {
-        closeEditButton.click();
+    await fetch(urlEdit, editUser).then(() => {
+        btn_closeEditModalWindow.click();
         getAdminPage();
-    })
+    });
 }

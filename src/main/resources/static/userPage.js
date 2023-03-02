@@ -1,22 +1,15 @@
 
-// Header
-const authUser = fetch('/user/current').then(response => response.json());
-
-authUser.then(user => {
+async function loadHeader() {
+    const user = await fetch('/user/current').then(response => response.json());
     document.getElementById("navbar-email").innerHTML = user.email;
     document.getElementById("navbar-roles").innerHTML = getPrettyRoles(user).toString();
-})
+}
 
 
- async function getUserPage() {
-    let page = await fetch('/user/current');
-
-    if(page.ok) {
-        let user = await page.json();
-        getInformationAboutUser(user);
-    } else {
-        alert(`Error, ${page.status}`);
-    }
+async function loadUserPage() {
+     let page = await fetch('/user/current');
+     let user = await page.json();
+     getInformationAboutUser(user);
 }
 
 function getInformationAboutUser(user) {
@@ -38,6 +31,9 @@ function getInformationAboutUser(user) {
     tableBody.innerHTML = dataHtml;
 }
 
+loadHeader();
+loadUserPage();
+
 
 
 function getPrettyRoles(user) {
@@ -48,6 +44,3 @@ function getPrettyRoles(user) {
     }
     return roles;
 }
-
-
-getUserPage();
