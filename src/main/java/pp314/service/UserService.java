@@ -12,10 +12,14 @@ public interface UserService extends UserDetailsService {
     void add(User user);
     List<User> getAllUsers();
     void delete(Long id);
-    void update(User user, Long id);
+    void update(User user, Long id) throws UserNotFoundException;
 
+<<<<<<< Updated upstream
     User getById(Long id);
     User findById(Long id);
+=======
+    User getById(Long id) throws UserNotFoundException;
+>>>>>>> Stashed changes
     User getByUsername(String userName);
 
     User getCurrentUser();

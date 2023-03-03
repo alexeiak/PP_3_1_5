@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.findById(id);
+    public User getById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 	@Override
 	public User findById(Long id) {
@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
+<<<<<<< Updated upstream
     public void update(User user, Long id) {
         final User previousUser = userRepository.findById(id);
 
@@ -106,6 +107,35 @@ public class UserServiceImpl implements UserService{
 	    }
 
         userRepository.save(previousUser);
+=======
+    public void update(User user, Long id) throws UserNotFoundException {
+//        User oldUser = getById(user.getId());
+//        if (oldUser.getPassword().equals(user.getPassword()) || "".equals(user.getPassword())) {
+//            user.setPassword(oldUser.getPassword());
+//        } else {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        }
+//        userRepository.save(user);
+
+
+	    final User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+//	    System.out.println("\n\n !!! " + user.getAge());
+	    if (user.getPassword().isEmpty()) {
+		    user.setPassword(existingUser.getPassword());
+	    } else {
+		    user.setPassword(passwordEncoder.encode(user.getPassword()));
+	    }
+
+//	    Set<Role> roles = new HashSet<>();
+//	    for (Role role : user.getRoles()) {
+//		    roles.add(roleRepository.findRoleByName(role.getName()));
+//	    }
+//	    user.setRoles(roles);
+
+//	    user.setEmail(user.getEmail());
+
+	    userRepository.save(user);
+>>>>>>> Stashed changes
     }
 
 
@@ -117,6 +147,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+<<<<<<< Updated upstream
 
 	@Transactional
 	@Override
@@ -124,6 +155,23 @@ public class UserServiceImpl implements UserService{
 		return userRepository.existsByEmail(email);
 
 	}
+=======
+	@Transactional
+	@Override
+	public boolean existsByEmail(String email) {
+		final User existingUser = userRepository.findByEmail(email);
+//	    System.out.println("\n\n !!! " + user.getAge());
+
+//		if (user.getPassword().isEmpty()) {
+//			user.setPassword(existingUser.getPassword());
+//		} else {
+//			user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		}
+
+		return userRepository.existsByEmail(email);
+	}
+
+>>>>>>> Stashed changes
 
 	@Transactional
 	@Override
@@ -154,8 +202,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Transactional
-	public Set<Role> getUserRoles(Long id) {
-		User user = userRepository.findById(id);
+	public Set<Role> getUserRoles(Long id) throws UserNotFoundException {
+		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
 		if (user != null) {
 			return user.getRoles();

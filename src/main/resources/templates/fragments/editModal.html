@@ -55,7 +55,9 @@
 						<input type="email"
 							   class="form-control"
 							   id="edit-email"
-							   name="email">
+							   name="email"
+							   th:value="${user.email}">
+						<span id="email-hint" class="text-danger"></span>
 					</div>
 
 					<div class="mb-3">
@@ -85,7 +87,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="editClose">Close</button>
 				<button type="button" class="btn btn-primary" id="editBtn"
-						onclick="editUser(); loadAdminPage()">Edit</button>
+						onclick="editUser(); ">Edit</button>
 			</div>
 
 		</div>

@@ -1,5 +1,8 @@
 package pp314.controller;
 
+import lombok.SneakyThrows;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestParam;
 import pp314.model.*;
 import pp314.service.*;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +41,7 @@ public class AdminRESTController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> showUser(@PathVariable("id") Long id) {
+    public ResponseEntity<User> showUser(@PathVariable("id") Long id) throws UserNotFoundException {
         return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
@@ -64,8 +67,24 @@ public class AdminRESTController {
 
 
     @PatchMapping("/users/{id}")
+<<<<<<< Updated upstream
     public ResponseEntity<HttpStatus> userSaveEdit(@RequestBody @NotNull User user, @PathVariable Long id) {
+=======
+    public ResponseEntity<HttpStatus> userSaveEdit(@RequestBody @NotNull User user, @PathVariable Long id) throws UserNotFoundException {
+        user.setId(id);
+>>>>>>> Stashed changes
         userService.update(user, id);
         return new ResponseEntity<> (HttpStatus.OK);
     }
+
+	@SneakyThrows
+	@PostMapping("/check-email")
+	public ResponseEntity<Boolean> checkEmail(@RequestBody String jsonEmail) {
+		JSONObject jsonObject = new JSONObject(jsonEmail);
+		String email = jsonObject.getString("email");
+		boolean emailExists = userService.existsByEmail(email);
+
+		return ResponseEntity.ok(emailExists);
+	}
+
 }
